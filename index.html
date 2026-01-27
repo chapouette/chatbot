@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<title>Chatbot Auswahl</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: #1B1B2F; /* dark background */
+}
+
+/* Question text */
+.question {
+  position: absolute;
+  top: 15%;
+  width: 100%;
+  text-align: center;
+  font-size: 30px; /* taille du texte modifiée */
+  color: white;
+  z-index: 10;
+  text-shadow: 1px 1px rgba(0,0,0,0.3);
+}
+
+/* Gradient background bubbles */
+.gradient-bg {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #1B1B2F;
+}
+
+:root {
+  /* Palette rose/vert */
+  --color1: 255, 102, 178;  /* rose vif */
+  --color2: 255, 153, 204;  /* rose clair */
+  --color3: 102, 255, 102;  /* vert clair */
+  --color4: 51, 204, 51;    /* vert moyen */
+  --color5: 0, 153, 0;      /* vert foncé */
+  --circle-size: 80%;
+  --blending: screen;
+}
+
+/* Animations */
+@keyframes moveInCircle {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes moveVertical {
+  0% { transform: translateY(-50%); }
+  50% { transform: translateY(50%); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes moveHorizontal {
+  0% { transform: translateX(-50%) translateY(-10%); }
+  50% { transform: translateX(50%) translateY(10%); }
+  100% { transform: translateX(-50%) translateY(-10%); }
+}
+
+/* Gradient circles */
+.gradients-container {
+  filter: blur(40px);
+  width: 100%;
+  height: 100%;
+}
+
+.g1 {
+  position: absolute;
+  background: radial-gradient(circle at center, rgba(var(--color1),0.8) 0, rgba(var(--color1),0) 50%);
+  mix-blend-mode: var(--blending);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  top: 15%;
+  left: 10%;
+  animation: moveVertical 30s ease infinite;
+}
+
+.g2 {
+  position: absolute;
+  background: radial-gradient(circle at center, rgba(var(--color2),0.8) 0, rgba(var(--color2),0) 50%);
+  mix-blend-mode: var(--blending);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  top: 50%;
+  left: 50%;
+  animation: moveInCircle 25s linear infinite;
+}
+
+.g3 {
+  position: absolute;
+  background: radial-gradient(circle at center, rgba(var(--color3),0.8) 0, rgba(var(--color3),0) 50%);
+  mix-blend-mode: var(--blending);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  top: 70%;
+  left: 30%;
+  animation: moveHorizontal 40s ease infinite;
+}
+
+.g4 {
+  position: absolute;
+  background: radial-gradient(circle at center, rgba(var(--color4),0.8) 0, rgba(var(--color4),0) 50%);
+  mix-blend-mode: var(--blending);
+  width: calc(var(--circle-size) * 1.5);
+  height: calc(var(--circle-size) * 1.5);
+  top: 40%;
+  left: 80%;
+  animation: moveVertical 35s ease infinite;
+}
+
+.g5 {
+  position: absolute;
+  background: radial-gradient(circle at center, rgba(var(--color5),0.8) 0, rgba(var(--color5),0) 50%);
+  mix-blend-mode: var(--blending);
+  width: calc(var(--circle-size) * 2);
+  height: calc(var(--circle-size) * 2);
+  top: 10%;
+  left: 60%;
+  animation: moveInCircle 50s ease infinite;
+}
+
+/* Chatbot selection images */
+.icon-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 80px;
+  z-index: 10;
+}
+
+.icon {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  border: 3px solid rgba(255,255,255,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
+.icon:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 40px rgba(255,255,255,0.4);
+  border-color: rgba(255,255,255,0.6);
+}
+
+/* Caption under images */
+.icon span {
+  margin-top: 10px;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="question">Mit wem möchtest du sprechen?</div>
+
+<div class="gradient-bg">
+  <div class="gradients-container">
+    <div class="g1"></div>
+    <div class="g2"></div>
+    <div class="g3"></div>
+    <div class="g4"></div>
+    <div class="g5"></div>
+  </div>
+</div>
+
+<div class="icon-container">
+  <!-- Chatbot Markus -->
+  <a href="markus.html" class="icon">
+    <img src="markus.jpg" alt="Markus">
+    <span>Markus</span>
+  </a>
+
+  <!-- Chatbot Charlie -->
+  <a href="charlie.html" class="icon">
+    <img src="charlie.jpg" alt="Charlie">
+    <span>Charlie</span>
+  </a>
+</div>
+
+</body>
+</html>
