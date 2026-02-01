@@ -32,7 +32,6 @@
       cursor: pointer;
       z-index: 10000;
       transition: 0.3s;
-      font-family: 'Montserrat', sans-serif;
     }
     .back-button:hover {
       background-color: rgba(255,255,255,0.4);
@@ -48,11 +47,10 @@
       font-size: 27px;
       text-align: center;
       z-index: 10000;
-      text-shadow: 1px 1px rgba(0,0,0,0.3);
       padding: 0 16px;
     }
 
-    /* Color variables */
+    /* Background gradient */
     :root {
       --color-bg1: rgb(5, 40, 20);
       --color-bg2: rgb(20, 70, 40);
@@ -66,126 +64,43 @@
       --blending: hard-light;
     }
 
-    /* Animations */
     @keyframes moveInCircle {
       0% { transform: rotate(0deg); }
-      50% { transform: rotate(180deg); }
       100% { transform: rotate(360deg); }
     }
-    @keyframes moveVertical {
-      0% { transform: translateY(-50%); }
-      50% { transform: translateY(50%); }
-      100% { transform: translateY(-50%); }
-    }
-    @keyframes moveHorizontal {
-      0% { transform: translateX(-50%) translateY(-10%); }
-      50% { transform: translateX(50%) translateY(10%); }
-      100% { transform: translateX(-50%) translateY(-10%); }
-    }
 
-    /* Gradient background and animated circles */
     .gradient-bg {
-      width: 100vw;
-      height: 100vh;
       position: fixed;
       inset: 0;
-      overflow: hidden;
       background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
       z-index: 0;
     }
-    .gradient-bg svg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-    }
+
     .gradients-container {
-      filter: url(#goo) blur(40px);
+      filter: blur(40px);
       width: 100%;
       height: 100%;
-    }
-    .g1 {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: var(--circle-size);
-      height: var(--circle-size);
-      top: calc(50% - var(--circle-size)/2);
-      left: calc(50% - var(--circle-size)/2);
-      transform-origin: center center;
-      animation: moveVertical 30s ease infinite;
-      opacity: 1;
-    }
-    .g2 {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: var(--circle-size);
-      height: var(--circle-size);
-      top: calc(50% - var(--circle-size)/2);
-      left: calc(50% - var(--circle-size)/2);
-      transform-origin: calc(50% - 400px);
-      animation: moveInCircle 20s reverse infinite;
-      opacity: 1;
-    }
-    .g3 {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: var(--circle-size);
-      height: var(--circle-size);
-      top: calc(50% - var(--circle-size)/2 + 200px);
-      left: calc(50% - var(--circle-size)/2 - 500px);
-      transform-origin: calc(50% + 400px);
-      animation: moveInCircle 40s linear infinite;
-      opacity: 1;
-    }
-    .g4 {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: var(--circle-size);
-      height: var(--circle-size);
-      top: calc(50% - var(--circle-size)/2);
-      left: calc(50% - var(--circle-size)/2);
-      transform-origin: calc(50% - 200px);
-      animation: moveHorizontal 40s ease infinite;
-      opacity: 0.7;
-    }
-    .g5 {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: calc(var(--circle-size)*2);
-      height: calc(var(--circle-size)*2);
-      top: calc(50% - var(--circle-size));
-      left: calc(50% - var(--circle-size));
-      transform-origin: calc(50% - 800px) calc(50% + 200px);
-      animation: moveInCircle 20s ease infinite;
-      opacity: 1;
-    }
-    .interactive {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: 100%;
-      height: 100%;
-      top: -50%;
-      left: -50%;
-      opacity: 0.7;
     }
 
-    /* ---------------------------
-       Help bubble (bulle d'aide)
-       --------------------------- */
+    .g1,.g2,.g3,.g4,.g5 {
+      position: absolute;
+      width: var(--circle-size);
+      height: var(--circle-size);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(var(--color2),0.8), transparent 60%);
+      animation: moveInCircle 40s linear infinite;
+    }
+
+    /* -------------------------
+       Bulle d'aide À GAUCHE
+       ------------------------- */
     .help-fab {
       position: fixed;
-      right: 24px;
+      left: 24px;
       bottom: 24px;
       width: 44px;
       height: 44px;
-      border-radius: 999px;
+      border-radius: 50%;
       border: 1px solid rgba(255,255,255,0.25);
       background: rgba(255,255,255,0.15);
       color: white;
@@ -194,28 +109,23 @@
       z-index: 10000;
       display: grid;
       place-items: center;
-      transition: 0.2s;
-      user-select: none;
     }
     .help-fab:hover {
       background: rgba(255,255,255,0.25);
-      transform: translateY(-1px);
     }
 
     .help-panel {
       position: fixed;
-      right: 24px;
-      bottom: 86px; /* au-dessus du bouton ? */
+      left: 24px;
+      bottom: 86px;
       width: min(340px, calc(100vw - 48px));
       background: rgba(0,0,0,0.78);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
       border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.2);
       box-shadow: 0 12px 30px rgba(0,0,0,0.45);
       z-index: 10000;
       display: none;
-      overflow: hidden;
-      backdrop-filter: blur(6px);
     }
 
     .help-panel[aria-hidden="false"] {
@@ -224,157 +134,83 @@
 
     .help-panel-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
       padding: 10px 12px;
       border-bottom: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.06);
-    }
-
-    .help-panel-title {
-      font-weight: 600;
-      letter-spacing: 0.2px;
     }
 
     .help-panel-close {
-      background: transparent;
+      background: none;
       border: none;
       color: white;
       font-size: 18px;
       cursor: pointer;
-      padding: 6px 8px;
-      border-radius: 10px;
-    }
-    .help-panel-close:hover {
-      background: rgba(255,255,255,0.12);
     }
 
     .help-panel-text {
-      padding: 12px 12px 14px 12px;
+      padding: 12px;
       font-size: 14px;
-      line-height: 1.35;
-    }
-
-    .help-panel-text ul {
-      margin: 8px 0 0 18px;
-      padding: 0;
     }
 
     .help-panel-text a {
       color: #bfffe3;
-      text-decoration: underline;
-      word-break: break-word;
     }
   </style>
 </head>
 
 <body>
-  <!-- Background -->
-  <div class="gradient-bg" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="goo">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-          <feColorMatrix in="blur" mode="matrix"
-            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
-            result="goo" />
-          <feBlend in="SourceGraphic" in2="goo" />
-        </filter>
-      </defs>
-    </svg>
 
-    <div class="gradients-container">
-      <div class="g1"></div>
-      <div class="g2"></div>
-      <div class="g3"></div>
-      <div class="g4"></div>
-      <div class="g5"></div>
-      <div class="interactive"></div>
-    </div>
-  </div>
+  <div class="gradient-bg"></div>
 
-  <!-- Bouton retour -->
   <button class="back-button" onclick="window.location.href='index.html'">Zurück</button>
 
-  <!-- Message central -->
   <div class="center-message">
     Klicke auf das Avatar unten rechts, um die Kommunikation zu starten.
   </div>
 
-  <!-- Help popup panel -->
+  <!-- Bulle d'aide -->
   <div id="helpPanel" class="help-panel" aria-hidden="true">
     <div class="help-panel-header">
-      <div class="help-panel-title">Hilfe</div>
-      <button id="helpClose" class="help-panel-close" aria-label="Close">✕</button>
+      <strong>Hilfe</strong>
+      <button id="helpClose" class="help-panel-close">✕</button>
     </div>
-
     <div class="help-panel-text">
       Informationsquelle
       <ul>
         <li>
-          Website von Andrew Tate –
-          <a href="https://www.cobratate.com/" target="_blank" rel="noopener noreferrer">https://www.cobratate.com/</a>
+          <a href="https://www.cobratate.com/" target="_blank">Andrew Tate</a>
         </li>
         <li>
-          Kampf für Männerrechte –
-          <a href="https://nationalcenterformen.org/" target="_blank" rel="noopener noreferrer">https://nationalcenterformen.org/</a>
+          <a href="https://nationalcenterformen.org/" target="_blank">Men’s Rights</a>
         </li>
       </ul>
     </div>
   </div>
 
-  <!-- Help floating button -->
-  <button id="helpBtn" class="help-fab" aria-label="Help">?</button>
+  <button id="helpBtn" class="help-fab">?</button>
 
-  <!-- Help JS -->
   <script>
     const helpPanel = document.getElementById('helpPanel');
     const helpBtn = document.getElementById('helpBtn');
     const helpClose = document.getElementById('helpClose');
 
-    function openHelp() {
-      helpPanel.setAttribute('aria-hidden', 'false');
-    }
+    helpBtn.onclick = () => {
+      helpPanel.setAttribute(
+        'aria-hidden',
+        helpPanel.getAttribute('aria-hidden') === 'false' ? 'true' : 'false'
+      );
+    };
 
-    function closeHelp() {
+    helpClose.onclick = () => {
       helpPanel.setAttribute('aria-hidden', 'true');
-    }
-
-    function toggleHelp() {
-      const isHidden = helpPanel.getAttribute('aria-hidden') !== 'false';
-      if (isHidden) openHelp();
-      else closeHelp();
-    }
-
-    helpBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleHelp();
-    });
-
-    helpClose.addEventListener('click', (e) => {
-      e.stopPropagation();
-      closeHelp();
-    });
-
-    // Fermer si clic en dehors
-    document.addEventListener('click', (e) => {
-      const open = helpPanel.getAttribute('aria-hidden') === 'false';
-      if (!open) return;
-
-      const clickedInside = helpPanel.contains(e.target) || helpBtn.contains(e.target);
-      if (!clickedInside) closeHelp();
-    });
-
-    // Fermer avec ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeHelp();
-    });
+    };
   </script>
 
-  <!-- Chatling script -->
+  <!-- Chatling -->
   <script>
     window.chtlConfig = { chatbotId: "5793541842" };
   </script>
-  <script async data-id="5793541842" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+  <script async src="https://chatling.ai/js/embed.js"></script>
+
 </body>
 </html>
