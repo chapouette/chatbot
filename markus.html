@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Chatbot Charlie</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
@@ -17,41 +18,41 @@ html, body {
   background: #051414;
 }
 
-/* Bouton retour */
+/* ===== Bouton retour ===== */
 .back-button {
   position: absolute;
   top: 20px;
   left: 20px;
-  padding: 10px 20px;
+  padding: 12px 24px;
   background-color: rgba(255,255,255,0.2);
   color: white;
-  font-size: 18px;
+  font-size: clamp(16px, 2vw, 20px);
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   z-index: 100;
   transition: 0.3s;
-  font-family: 'Montserrat';
 }
 .back-button:hover {
   background-color: rgba(255,255,255,0.4);
 }
 
-/* Message central */
+/* ===== Message central ===== */
 .center-message {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  font-size: 27px;
+  font-size: clamp(22px, 3vw, 34px);
   text-align: center;
   z-index: 100;
+  width: 80%;
+  line-height: 1.3;
   text-shadow: 1px 1px rgba(0,0,0,0.3);
 }
 
-/* ===== BACKGROUND ORIGINAL (INCHANGÉ) ===== */
-
+/* ===== BACKGROUND ===== */
 :root {
   --color-bg1: rgb(5, 40, 20);
   --color-bg2: rgb(20, 70, 40);
@@ -87,14 +88,10 @@ html, body {
   position: relative;
   overflow: hidden;
   background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
-  top: 0;
-  left: 0;
 }
 
 .gradient-bg svg {
   position: fixed;
-  top:0;
-  left:0;
   width: 0;
   height: 0;
 }
@@ -105,95 +102,82 @@ html, body {
   height: 100%;
 }
 
-.g1 {
+.g1, .g2, .g3, .g4, .g5 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
-  mix-blend-mode: var(--blending);
   width: var(--circle-size);
   height: var(--circle-size);
-  top: calc(50% - var(--circle-size)/2);
-  left: calc(50% - var(--circle-size)/2);
+  mix-blend-mode: var(--blending);
+}
+
+.g1 {
+  background: radial-gradient(circle, rgba(var(--color1),0.8), transparent 50%);
+  top: 10%;
+  left: 10%;
   animation: moveVertical 30s ease infinite;
 }
 
 .g2 {
-  position: absolute;
-  background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
-  mix-blend-mode: var(--blending);
-  width: var(--circle-size);
-  height: var(--circle-size);
-  top: calc(50% - var(--circle-size)/2);
-  left: calc(50% - var(--circle-size)/2);
+  background: radial-gradient(circle, rgba(var(--color2),0.8), transparent 50%);
+  top: 50%;
+  left: 50%;
   animation: moveInCircle 20s reverse infinite;
 }
 
 .g3 {
-  position: absolute;
-  background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
-  mix-blend-mode: var(--blending);
-  width: var(--circle-size);
-  height: var(--circle-size);
-  top: calc(50% - var(--circle-size)/2 + 200px);
-  left: calc(50% - var(--circle-size)/2 - 500px);
+  background: radial-gradient(circle, rgba(var(--color3),0.8), transparent 50%);
+  top: 70%;
+  left: 30%;
   animation: moveInCircle 40s linear infinite;
 }
 
 .g4 {
-  position: absolute;
-  background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
-  mix-blend-mode: var(--blending);
-  width: var(--circle-size);
-  height: var(--circle-size);
-  top: calc(50% - var(--circle-size)/2);
-  left: calc(50% - var(--circle-size)/2);
+  background: radial-gradient(circle, rgba(var(--color4),0.8), transparent 50%);
+  top: 40%;
+  left: 80%;
   animation: moveHorizontal 40s ease infinite;
 }
 
 .g5 {
-  position: absolute;
-  background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
-  mix-blend-mode: var(--blending);
+  background: radial-gradient(circle, rgba(var(--color5),0.8), transparent 50%);
   width: calc(var(--circle-size)*2);
   height: calc(var(--circle-size)*2);
-  top: calc(50% - var(--circle-size));
-  left: calc(50% - var(--circle-size));
+  top: 20%;
+  left: 60%;
   animation: moveInCircle 20s ease infinite;
 }
 
 .interactive {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
-  mix-blend-mode: var(--blending);
   width: 100%;
   height: 100%;
-  top: -50%;
-  left: -50%;
-  opacity: 0.7;
+  background: radial-gradient(circle, rgba(var(--color-interactive),0.6), transparent 50%);
+  mix-blend-mode: var(--blending);
 }
 
-/* ===== AJOUT UNIQUE : BULLE D’AIDE À GAUCHE ===== */
-
+/* ===== Bouton aide ===== */
 .help-fab {
   position: fixed;
   left: 24px;
   bottom: 24px;
-  width: 44px;
-  height: 44px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.25);
   color: white;
-  font-size: 22px;
+  font-size: 26px;
   cursor: pointer;
   z-index: 10000;
 }
 
+/* ===== Panneau aide ===== */
 .help-panel {
   position: fixed;
   left: 24px;
-  bottom: 86px;
-  width: 320px;
-  background: rgba(0,0,0,0.8);
+  bottom: 90px;
+  width: 360px;
+  max-width: 90vw;
+  background: rgba(0,0,0,0.85);
   color: white;
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.2);
@@ -208,31 +192,50 @@ html, body {
 .help-panel-header {
   display: flex;
   justify-content: space-between;
-  padding: 10px 12px;
+  padding: 12px;
   border-bottom: 1px solid rgba(255,255,255,0.15);
 }
 
-.help-panel-close {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
+.help-panel-text {
+  padding: 14px;
+  font-size: clamp(14px, 2vw, 18px);
+  line-height: 1.4;
 }
 
-.help-panel-text {
-  padding: 12px;
-  font-size: 14px;
+/* ===== Adaptation téléphone ===== */
+@media (max-width: 600px) {
+
+  .back-button {
+    padding: 14px 26px;
+    font-size: 18px;
+  }
+
+  .center-message {
+    font-size: 24px;
+    width: 90%;
+  }
+
+  .help-fab {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+
+  .help-panel {
+    left: 5%;
+    bottom: 90px;
+    width: 90%;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- Bouton retour -->
-<button class="back-button" onclick="window.location.href='index.html'">Zurück</button>
+<button class="back-button" onclick="window.location.href='index.html'">
+  Zurück
+</button>
 
-<!-- Message central -->
 <div class="center-message">
   Klicke auf das Avatar unten rechts, um die Kommunikation zu starten.
 </div>
@@ -241,12 +244,12 @@ html, body {
   <svg xmlns="http://www.w3.org/2000/svg">
     <defs>
       <filter id="goo">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-        <feColorMatrix in="blur" mode="matrix"
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
+        <feColorMatrix mode="matrix"
           values="1 0 0 0 0
                   0 1 0 0 0
                   0 0 1 0 0
-                  0 0 0 18 -8" />
+                  0 0 0 18 -8"/>
       </filter>
     </defs>
   </svg>
@@ -261,11 +264,10 @@ html, body {
   </div>
 </div>
 
-<!-- Help popup -->
 <div id="helpPanel" class="help-panel" aria-hidden="true">
   <div class="help-panel-header">
-    <div class="help-panel-title">Hilfe</div>
-    <button id="helpClose" class="help-panel-close">✕</button>
+    <div>Hilfe</div>
+    <button id="helpClose">✕</button>
   </div>
   <div class="help-panel-text">
     Informationsquelle
@@ -279,23 +281,22 @@ html, body {
 <button id="helpBtn" class="help-fab">?</button>
 
 <script>
-  const helpPanel = document.getElementById('helpPanel');
-  document.getElementById('helpBtn').onclick = () => {
-    helpPanel.setAttribute(
-      'aria-hidden',
-      helpPanel.getAttribute('aria-hidden') === 'false' ? 'true' : 'false'
-    );
-  };
-  document.getElementById('helpClose').onclick = () => {
-    helpPanel.setAttribute('aria-hidden', 'true');
-  };
+const helpPanel = document.getElementById('helpPanel');
+document.getElementById('helpBtn').onclick = () => {
+  helpPanel.setAttribute(
+    'aria-hidden',
+    helpPanel.getAttribute('aria-hidden') === 'false' ? 'true' : 'false'
+  );
+};
+document.getElementById('helpClose').onclick = () => {
+  helpPanel.setAttribute('aria-hidden', 'true');
+};
 </script>
 
-<!-- Chatling -->
 <script>
-  window.chtlConfig = { chatbotId: "5793541842" };
+window.chtlConfig = { chatbotId: "5793541842" };
 </script>
-<script async data-id="5793541842" id="chtl-script" src="https://chatling.ai/js/embed.js"></script>
+<script async data-id="5793541842" src="https://chatling.ai/js/embed.js"></script>
 
 </body>
 </html>
