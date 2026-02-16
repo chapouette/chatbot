@@ -1,365 +1,332 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <title>Chatbot Charlie</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chatbot Charlie</title>
 
-  <style>
-    html, body {
-      font-family: 'Montserrat', sans-serif;
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
 
-    .back-button {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      background-color: rgba(255,255,255,0.2);
-      color: white;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 9999;
-      transition: 0.3s;
-      font-family: 'Montserrat';
-    }
-    .back-button:hover {
-      background-color: rgba(255,255,255,0.4);
-    }
+<style>
+html, body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
 
-    /* Message central */
-    .center-message {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      font-size: 27px;
-      text-align: center;
-      z-index: 100;
-      text-shadow: 1px 1px rgba(0,0,0,0.3);
-    }
+/* ===== Back button ===== */
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 9999;
+  transition: 0.3s;
+}
 
-    /* Text overlay (si tu veux le conserver pour autre usage) */
-    .text-container {
-      z-index: 100;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      position: absolute;
-      top: 0;
-      left: 0;
-      justify-content: center;
-      align-items: center;
-      font-size: 96px;
-      color: white;
-      opacity: 0.8;
-      user-select: none;
-      text-shadow: 1px 1px rgba(0,0,0,0.1);
-    }
+.back-button:hover {
+  background-color: rgba(255,255,255,0.4);
+}
 
-    /* Variables de couleur */
-    :root {
-      --color-bg1: rgb(108, 0, 162);
-      --color-bg2: rgb(0, 17, 82);
-      --color1: 18, 113, 255;
-      --color2: 221, 74, 255;
-      --color3: 100, 220, 255;
-      --color4: 200, 50, 50;
-      --color5: 180, 180, 50;
-      --color-interactive: 140, 100, 255;
-      --circle-size: 80%;
-      --blending: hard-light;
-    }
+/* ===== Center message ===== */
+.center-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 27px;
+  text-align: center;
+  z-index: 100;
+  text-shadow: 1px 1px rgba(0,0,0,0.3);
+  width: 80%;
+}
 
-    /* Animations */
-    @keyframes moveInCircle {
-      0% { transform: rotate(0deg); }
-      50% { transform: rotate(180deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes moveVertical {
-      0% { transform: translateY(-50%); }
-      50% { transform: translateY(50%); }
-      100% { transform: translateY(-50%); }
-    }
-    @keyframes moveHorizontal {
-      0% { transform: translateX(-50%) translateY(-10%); }
-      50% { transform: translateX(50%) translateY(10%); }
-      100% { transform: translateX(-50%) translateY(-10%); }
-    }
+/* ===== Overlay ===== */
+.text-container {
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  font-size: 96px;
+  color: white;
+  opacity: 0.8;
+  user-select: none;
+}
 
-    /* Gradient background and animated circles */
-    .gradient-bg {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
-      top: 0;
-      left: 0;
-    }
+/* ===== Colors ===== */
+:root {
+  --color-bg1: rgb(108, 0, 162);
+  --color-bg2: rgb(0, 17, 82);
+  --color1: 18, 113, 255;
+  --color2: 221, 74, 255;
+  --color3: 100, 220, 255;
+  --color4: 200, 50, 50;
+  --color5: 180, 180, 50;
+  --color-interactive: 140, 100, 255;
+  --circle-size: 80%;
+  --blending: hard-light;
+}
 
-    .gradient-bg svg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-    }
+/* ===== Animations ===== */
+@keyframes moveInCircle {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
 
-    .gradients-container {
-      filter: url(#goo) blur(40px);
-      width: 100%;
-      height: 100%;
-    }
+@keyframes moveVertical {
+  0% { transform: translateY(-50%); }
+  50% { transform: translateY(50%); }
+  100% { transform: translateY(-50%); }
+}
 
-    .g1 {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: var(--circle-size);
-      height: var(--circle-size);
-      top: calc(50% - var(--circle-size)/2);
-      left: calc(50% - var(--circle-size)/2);
-      transform-origin: center center;
-      animation: moveVertical 30s ease infinite;
-      opacity: 1;
-    }
-    .g2 {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: var(--circle-size);
-      height: var(--circle-size);
-      top: calc(50% - var(--circle-size)/2);
-      left: calc(50% - var(--circle-size)/2);
-      transform-origin: calc(50% - 400px);
-      animation: moveInCircle 20s reverse infinite;
-      opacity: 1;
-    }
-    .g3 {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: var(--circle-size);
-      height: var(--circle-size);
-      top: calc(50% - var(--circle-size)/2 + 200px);
-      left: calc(50% - var(--circle-size)/2 - 500px);
-      transform-origin: calc(50% + 400px);
-      animation: moveInCircle 40s linear infinite;
-      opacity: 1;
-    }
-    .g4 {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: var(--circle-size);
-      height: var(--circle-size);
-      top: calc(50% - var(--circle-size)/2);
-      left: calc(50% - var(--circle-size)/2);
-      transform-origin: calc(50% - 200px);
-      animation: moveHorizontal 40s ease infinite;
-      opacity: 0.7;
-    }
-    .g5 {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: calc(var(--circle-size)*2);
-      height: calc(var(--circle-size)*2);
-      top: calc(50% - var(--circle-size));
-      left: calc(50% - var(--circle-size));
-      transform-origin: calc(50% - 800px) calc(50% + 200px);
-      animation: moveInCircle 20s ease infinite;
-      opacity: 1;
-    }
-    .interactive {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
-      mix-blend-mode: var(--blending);
-      width: 100%;
-      height: 100%;
-      top: -50%;
-      left: -50%;
-      opacity: 0.7;
-    }
+@keyframes moveHorizontal {
+  0% { transform: translateX(-50%) translateY(-10%); }
+  50% { transform: translateX(50%) translateY(10%); }
+  100% { transform: translateX(-50%) translateY(-10%); }
+}
 
-    /* --- Help bubble (bottom-left) --- */
-    .help-bubble {
-      position: fixed;
-      left: 18px;
-      bottom: 18px;
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      background: rgba(255,255,255,0.22);
-      color: white;
-      font-size: 22px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: 0.25s;
-      backdrop-filter: blur(8px);
-    }
-    .help-bubble:hover {
-      background: rgba(255,255,255,0.35);
-    }
-    .help-bubble:active {
-      transform: scale(0.96);
-    }
+/* ===== Background ===== */
+.gradient-bg {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+}
 
-    /* Popup panel */
-    .help-panel {
-      position: fixed;
-      left: 18px;
-      bottom: 74px; /* au-dessus de la bulle */
-      width: min(340px, calc(100vw - 36px));
-      background: rgba(0,0,0,0.55);
-      color: white;
-      border-radius: 14px;
-      padding: 14px 14px 12px;
-      z-index: 9999;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      backdrop-filter: blur(10px);
-      display: none; /* caché par défaut */
-    }
-    .help-panel.open {
-      display: block;
-    }
+.gradient-bg svg {
+  position: fixed;
+  width: 0;
+  height: 0;
+}
 
-    .help-panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .help-panel-title {
-      font-size: 14px;
-      font-weight: 700;
-      opacity: 0.95;
-    }
-    .help-panel-close {
-      border: none;
-      background: rgba(255,255,255,0.15);
-      color: white;
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.2s;
-      font-size: 16px;
-      line-height: 1;
-    }
-    .help-panel-close:hover {
-      background: rgba(255,255,255,0.25);
-    }
-    .help-panel-text {
-      font-size: 13px;
-      line-height: 1.35;
-      opacity: 0.95;
-    }
-  </style>
+.gradients-container {
+  filter: url(#goo) blur(40px);
+  width: 100%;
+  height: 100%;
+}
+
+.g1,.g2,.g3,.g4,.g5 {
+  position: absolute;
+  mix-blend-mode: var(--blending);
+}
+
+.g1 {
+  background: radial-gradient(circle, rgba(var(--color1),0.8) 0, rgba(var(--color1),0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  top: calc(50% - var(--circle-size)/2);
+  left: calc(50% - var(--circle-size)/2);
+  animation: moveVertical 30s ease infinite;
+}
+
+.g2 {
+  background: radial-gradient(circle, rgba(var(--color2),0.8) 0, rgba(var(--color2),0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  animation: moveInCircle 20s reverse infinite;
+}
+
+.g3 {
+  background: radial-gradient(circle, rgba(var(--color3),0.8) 0, rgba(var(--color3),0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  animation: moveInCircle 40s linear infinite;
+}
+
+.g4 {
+  background: radial-gradient(circle, rgba(var(--color4),0.8) 0, rgba(var(--color4),0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  animation: moveHorizontal 40s ease infinite;
+  opacity: 0.7;
+}
+
+.g5 {
+  background: radial-gradient(circle, rgba(var(--color5),0.8) 0, rgba(var(--color5),0) 50%);
+  width: calc(var(--circle-size)*2);
+  height: calc(var(--circle-size)*2);
+  animation: moveInCircle 20s ease infinite;
+}
+
+.interactive {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(var(--color-interactive),0.8) 0, rgba(var(--color-interactive),0) 50%);
+  mix-blend-mode: var(--blending);
+}
+
+/* ===== Help bubble ===== */
+.help-bubble {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: rgba(255,255,255,0.22);
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Help panel ===== */
+.help-panel {
+  position: fixed;
+  left: 18px;
+  bottom: 74px;
+  width: min(340px, calc(100vw - 36px));
+  max-height: 60vh;
+  overflow-y: auto;
+  background: rgba(0,0,0,0.55);
+  color: white;
+  border-radius: 14px;
+  padding: 14px;
+  display: none;
+}
+
+.help-panel.open {
+  display: block;
+}
+
+.help-panel-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.help-panel-text {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* ===== Responsive ===== */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .center-message {
+    font-size: 24px;
+  }
+}
+
+/* Phone */
+@media (max-width: 600px) {
+
+  .back-button {
+    font-size: 20px;
+    padding: 14px 24px;
+  }
+
+  .center-message {
+    font-size: 30px;
+    width: 88%;
+  }
+
+  .help-bubble {
+    width: 60px;
+    height: 60px;
+    font-size: 26px;
+  }
+
+  .help-panel {
+    max-height: 65vh;
+  }
+
+  .help-panel-text {
+    font-size: 16px;
+  }
+}
+</style>
 </head>
 
 <body>
-  <!-- Bouton retour -->
-  <button class="back-button" onclick="window.location.href='index.html'">Zurück</button>
 
-  <!-- Message central -->
-  <div class="center-message">
-    Klicke auf das Avatar unten rechts, um die Kommunikation zu starten.
-  </div>
+<button class="back-button" onclick="window.location.href='index.html'">
+Zurück
+</button>
 
-  <div class="text-container"></div>
+<div class="center-message">
+Klicke auf das Avatar unten rechts, um die Kommunikation zu starten.
+</div>
 
-  <div class="gradient-bg">
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="goo">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-          <feColorMatrix
-            in="blur"
-            mode="matrix"
-            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
-            result="goo"
-          />
-          <feBlend in="SourceGraphic" in2="goo" />
-        </filter>
-      </defs>
-    </svg>
+<div class="gradient-bg">
+<svg xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="goo">
+<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+<feColorMatrix in="blur" mode="matrix"
+values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 18 -8"
+result="goo"/>
+<feBlend in="SourceGraphic" in2="goo"/>
+</filter>
+</defs>
+</svg>
 
-    <div class="gradients-container">
-      <div class="g1"></div>
-      <div class="g2"></div>
-      <div class="g3"></div>
-      <div class="g4"></div>
-      <div class="g5"></div>
-      <div class="interactive"></div>
-    </div>
-  </div>
+<div class="gradients-container">
+<div class="g1"></div>
+<div class="g2"></div>
+<div class="g3"></div>
+<div class="g4"></div>
+<div class="g5"></div>
+<div class="interactive"></div>
+</div>
+</div>
 
-  <!-- Help popup -->
-  <div id="helpPanel" class="help-panel" aria-hidden="true">
-    <div class="help-panel-header">
-      <div class="help-panel-title">Hilfe</div>
-      <button id="helpClose" class="help-panel-close" aria-label="Close">✕</button>
-    </div>
-    <div class="help-panel-text">
-      Informationsquelle<br/>
-     <ul>
-      <li>Website zum Thema Ungleichheit - https://inequality.org/</li> 
-    <li>  Website der UNO zum Recht auf Gleichstellung - https://www.unwomen.org/en</li>
-    <li>  Website der OECD zu Ungleichheitsstatistiken - https://www.oecd.org/en/topics/gender-equality-and-work.html</li>
-      </ul> 
+<div id="helpPanel" class="help-panel">
+<div class="help-panel-title">Hilfe</div>
+<div class="help-panel-text">
+Informationsquelle
+<ul>
+<li>https://inequality.org/</li>
+<li>https://www.unwomen.org/en</li>
+<li>https://www.oecd.org/en/topics/gender-equality-and-work.html</li>
+</ul>
+</div>
+</div>
 
-    </div>
-  </div>
+<button id="helpBubble" class="help-bubble">?</button>
 
-  <!-- Help bubble button -->
-  <button id="helpBubble" class="help-bubble" aria-label="Help">?</button>
+<script>
+window.chtlConfig = { chatbotId: "5361885787" };
 
-  <!-- Chatling embed -->
-  <script>
-    window.chtlConfig = { chatbotId: "5361885787" };
+const helpPanel = document.getElementById('helpPanel');
+const helpBubble = document.getElementById('helpBubble');
+const helpClose = document.getElementById('helpClose');
 
-    // Toggle help popup
-    const helpPanel = document.getElementById('helpPanel');
-    const helpBubble = document.getElementById('helpBubble');
-    const helpClose = document.getElementById('helpClose');
+function setHelpOpen(isOpen) {
+  helpPanel.classList.toggle('open', isOpen);
+}
 
-    function setHelpOpen(isOpen) {
-      helpPanel.classList.toggle('open', isOpen);
-      helpPanel.setAttribute('aria-hidden', String(!isOpen));
-    }
+helpBubble.addEventListener('click', () => {
+  setHelpOpen(!helpPanel.classList.contains('open'));
+});
 
-    helpBubble.addEventListener('click', () => {
-      const isOpen = helpPanel.classList.contains('open');
-      setHelpOpen(!isOpen);
-    });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') setHelpOpen(false);
+});
+</script>
 
-    helpClose.addEventListener('click', () => setHelpOpen(false));
+<script async data-id="5361885787"
+src="https://chatling.ai/js/embed.js"></script>
 
-    // Optional: close on Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') setHelpOpen(false);
-    });
-  </script>
-
-  <script async data-id="5361885787" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
 </body>
 </html>
-
-
