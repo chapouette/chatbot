@@ -2,7 +2,9 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chatbot Auswahl</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
 
 <style>
@@ -13,22 +15,22 @@ html, body {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background: #1B1B2F; /* dark background */
+  background: #1B1B2F;
 }
 
-/* Question text */
+/* Question */
 .question {
   position: absolute;
   top: 15%;
   width: 100%;
   text-align: center;
-  font-size: 30px; /* taille du texte modifiée */
+  font-size: 30px;
   color: white;
   z-index: 10;
   text-shadow: 1px 1px rgba(0,0,0,0.3);
 }
 
-/* Gradient background bubbles */
+/* Background */
 .gradient-bg {
   width: 100vw;
   height: 100vh;
@@ -38,12 +40,11 @@ html, body {
 }
 
 :root {
-  /* Palette rose/vert */
-  --color1: 255, 102, 178;  /* rose vif */
-  --color2: 255, 153, 204;  /* rose clair */
-  --color3: 102, 255, 102;  /* vert clair */
-  --color4: 51, 204, 51;    /* vert moyen */
-  --color5: 0, 153, 0;      /* vert foncé */
+  --color1: 255, 102, 178;
+  --color2: 255, 153, 204;
+  --color3: 102, 255, 102;
+  --color4: 51, 204, 51;
+  --color5: 0, 153, 0;
   --circle-size: 80%;
   --blending: screen;
 }
@@ -74,10 +75,13 @@ html, body {
   height: 100%;
 }
 
-.g1 {
+.g1, .g2, .g3, .g4, .g5 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(var(--color1),0.8) 0, rgba(var(--color1),0) 50%);
   mix-blend-mode: var(--blending);
+}
+
+.g1 {
+  background: radial-gradient(circle, rgba(var(--color1),0.8) 0, rgba(var(--color1),0) 50%);
   width: var(--circle-size);
   height: var(--circle-size);
   top: 15%;
@@ -86,9 +90,7 @@ html, body {
 }
 
 .g2 {
-  position: absolute;
-  background: radial-gradient(circle at center, rgba(var(--color2),0.8) 0, rgba(var(--color2),0) 50%);
-  mix-blend-mode: var(--blending);
+  background: radial-gradient(circle, rgba(var(--color2),0.8) 0, rgba(var(--color2),0) 50%);
   width: var(--circle-size);
   height: var(--circle-size);
   top: 50%;
@@ -97,9 +99,7 @@ html, body {
 }
 
 .g3 {
-  position: absolute;
-  background: radial-gradient(circle at center, rgba(var(--color3),0.8) 0, rgba(var(--color3),0) 50%);
-  mix-blend-mode: var(--blending);
+  background: radial-gradient(circle, rgba(var(--color3),0.8) 0, rgba(var(--color3),0) 50%);
   width: var(--circle-size);
   height: var(--circle-size);
   top: 70%;
@@ -108,9 +108,7 @@ html, body {
 }
 
 .g4 {
-  position: absolute;
-  background: radial-gradient(circle at center, rgba(var(--color4),0.8) 0, rgba(var(--color4),0) 50%);
-  mix-blend-mode: var(--blending);
+  background: radial-gradient(circle, rgba(var(--color4),0.8) 0, rgba(var(--color4),0) 50%);
   width: calc(var(--circle-size) * 1.5);
   height: calc(var(--circle-size) * 1.5);
   top: 40%;
@@ -119,9 +117,7 @@ html, body {
 }
 
 .g5 {
-  position: absolute;
-  background: radial-gradient(circle at center, rgba(var(--color5),0.8) 0, rgba(var(--color5),0) 50%);
-  mix-blend-mode: var(--blending);
+  background: radial-gradient(circle, rgba(var(--color5),0.8) 0, rgba(var(--color5),0) 50%);
   width: calc(var(--circle-size) * 2);
   height: calc(var(--circle-size) * 2);
   top: 10%;
@@ -129,7 +125,7 @@ html, body {
   animation: moveInCircle 50s ease infinite;
 }
 
-/* Chatbot selection images */
+/* Chatbot icons */
 .icon-container {
   position: absolute;
   top: 50%;
@@ -158,7 +154,6 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
   border-radius: 50%;
 }
 
@@ -168,7 +163,6 @@ html, body {
   border-color: rgba(255,255,255,0.6);
 }
 
-/* Caption under images */
 .icon span {
   margin-top: 10px;
   color: white;
@@ -176,8 +170,61 @@ html, body {
   font-weight: 600;
   text-align: center;
 }
+
+/* ===== Tablettes ===== */
+@media (max-width: 900px) {
+
+  .question {
+    font-size: 24px;
+    top: 10%;
+    text-align: center;
+  }
+
+  .icon-container {
+    gap: 40px;
+  }
+
+  .icon {
+    width: 110px;
+    height: 110px;
+  }
+
+  .icon span {
+    font-size: 16px;
+  }
+}
+
+/* ===== Téléphones ===== */
+@media (max-width: 600px) {
+
+  .question {
+    font-size: 28px;
+    top: 8%;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .icon-container {
+    flex-direction: column;
+    gap: 45px;
+    top: 60%;
+  }
+
+  .icon {
+    width: 150px;
+    height: 150px;
+    border-width: 4px;
+  }
+
+  .icon span {
+    font-size: 22px;
+    margin-top: 14px;
+  }
+}
+
 </style>
 </head>
+
 <body>
 
 <div class="question">Mit wem möchtest du sprechen?</div>
@@ -193,13 +240,11 @@ html, body {
 </div>
 
 <div class="icon-container">
-  <!-- Chatbot Markus -->
   <a href="markus.html" class="icon">
     <img src="markus.jpg" alt="Markus">
     <span>Markus</span>
   </a>
 
-  <!-- Chatbot Charlie -->
   <a href="charlie.html" class="icon">
     <img src="charlie.jpg" alt="Charlie">
     <span>Charlie</span>
